@@ -9,18 +9,23 @@ let logoContainer = document.getElementById("logoContainer");
 let imgElement;
 
 document.getElementById("file-picker").addEventListener("change", (evt) => {
-    console.log("picked file name:", evt.target.value); //prints fakepath 
-    let strPath = evt.target.value;
-
-    // fileName = "https://upload.wikimedia.org/wikipedia/commons/4/45/A_small_cup_of_coffee.JPG"; //for test
+    console.log("picked fileName:", evt.target.value); //prints fakepath 
+    // let strPath = evt.target.value;
+    // console.log("strPath", strPath);
     
     imgElement = document.createElement("img");
 
     //try to show img:
     file = evt.target.files[0];
     // console.log("file", file);
-    console.log("fileName", file.name);
+
     fileName = file.name;
+    //for testing position dropdown + comment back row 136
+    // fileName = "https://upload.wikimedia.org/wikipedia/commons/4/45/A_small_cup_of_coffee.JPG"; 
+
+    //position right or left depends  on how much white it is around the logo:
+    // fileName = https://99designs-blog.imgix.net/blog/wp-content/uploads/2020/04/VKeVyLFoCwCWPdcPrLiWyc-1200-80.jpg?auto=format&q=60&w=1131&h=848.25&fit=crop&crop=faces
+    // console.log("fileName", fileName);
 
       // show errorMsg if file is not an img
     if (file.type && !file.type.startsWith('image/')) {
@@ -38,7 +43,10 @@ document.getElementById("file-picker").addEventListener("change", (evt) => {
 
     // // reader.readAsText(file);
     // reader.readAsDataURL(file);
+
     pickedFile = true;
+    console.log("imgElement", imgElement);
+    imgElement.src = fileName; // ERROR when filename is icon.png: i.e. mark-williams-9bNmhMKQM1Q-unsplash.jpg:1 GET http://127.0.0.1:5500/mark-williams-9bNmhMKQM1Q-unsplash.jpg 404 (Not Found Image (async)		
 });
 
 const addStyleAttr = (selectElementValue) => {
@@ -80,10 +88,6 @@ const addStyleAttr = (selectElementValue) => {
     logoContainer.style.cssText = cssTextImgContainer;
 };
 
-// const addSrcAttr = (url) => {
-//     imgElement.src = url;
-// };
-
 document.getElementById("upload-btn").addEventListener("click", (evt) => {
 
     document.getElementById("top").innerHTML = "";
@@ -101,21 +105,11 @@ document.getElementById("upload-btn").addEventListener("click", (evt) => {
 
             //create styleAttr + add to imgElement
             addStyleAttr(selectElementValue);
-
-            imgElement.src = fileName;
-
-
-    //         //so the fileName is visible in textarea
-    // console.log("imgElement", imgElement);
-    // imgElement.src = fileName; //error: Image (async) use await?
-            
         } else {
             imgElement.classList.replace(imgElement.classList[0], selectElementValue);
             
             //create styleAttr + add to imgElement
             addStyleAttr(selectElementValue);
-            
-            imgElement.src = fileName;
         };
 
         let imgElementToString = imgElement.outerHTML;
@@ -135,10 +129,10 @@ document.getElementById("upload-btn").addEventListener("click", (evt) => {
         console.log("errorMsg = Du måste välja vilken fil du vill ladda upp.");
     };
 
-    logoContainer.innerHTML = url;
-
-    // logoContainer.appendChild(file);
+    //print picked file in result dig - NOT WORKING
+    // logoContainer.innerHTML = url; 
     
+    //for testing position dropdown
     // logoContainer.appendChild(imgElement); //sometimes get error: Uncaught ReferenceError: imgElement is not defined - lägga till async att imgElement måste fyllas innan detta körs?
  
 });
