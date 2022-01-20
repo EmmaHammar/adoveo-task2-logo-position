@@ -1,23 +1,31 @@
 let pickedFile = false;
 let pickedPosition = false;
 let addStyle;
+let fileName;
+
+//TODO - delete:
+resultContainer.style.cssText = "background: pink; width:60%; height:300px;";
 
 document.getElementById("file-picker").addEventListener("change", (evt) => {
-    console.log("picked file name:", evt.target.value); //prints fakepath - can get filename through: HTMLInputElement.files 
-
-    // imgTag = '<img src="anyLogo.png" style="">';
-    imgElement = document.createElement("img");
+    console.log("picked file name:", evt.target.value); //prints fakepath 
+    // fileName = evt.target.value;
+    fileName = "https://upload.wikimedia.org/wikipedia/commons/4/45/A_small_cup_of_coffee.JPG"; //ska vara dynamisk
+    // fileName = "Logga.png";
     
+    imgElement = document.createElement("img");
+    addSrcAttr(fileName);
     pickedFile = true;
 });
 
-
+const addSrcAttr = (fileName) => {
+    imgElement.src = fileName;
+};
 
 const addStyleAttr = (selectElementValue) => {
     switch (selectElementValue) {
         case "top-left":
             console.log("case top-left");
-            addStyle = "position: relative;";
+            addStyle = "width:100%; height:100%; object-fit:cover;";
         break;
         case "top-center": 
             console.log("case top-center");
@@ -38,6 +46,7 @@ const addStyleAttr = (selectElementValue) => {
         default:
             break;
     };
+    imgElement.style.cssText = addStyle;
 };
 
 document.getElementById("upload-btn").addEventListener("click", (evt) => {
@@ -57,13 +66,12 @@ document.getElementById("upload-btn").addEventListener("click", (evt) => {
 
             //create styleAttr + add to imgElement
             addStyleAttr(selectElementValue);
-            imgElement.style.cssText = addStyle;
+            
         } else {
             imgElement.classList.replace(imgElement.classList[0], selectElementValue);
             
             //create styleAttr + add to imgElement
             addStyleAttr(selectElementValue);
-            imgElement.style.cssText = addStyle;
         };
 
         let imgElementToString = imgElement.outerHTML;
@@ -82,9 +90,14 @@ document.getElementById("upload-btn").addEventListener("click", (evt) => {
     } else {
         console.log("errorMsg = Du måste välja vilken fil du vill ladda upp.");
     };
+
+    let resultContainer = document.getElementById("resultContainer");
+
+    resultContainer.appendChild(imgElement);
     
 });
 
+//vad behöver srcString vara för att kunna visa bilden? https://stackoverflow.com/questions/18457340/how-to-preview-selected-image-in-input-type-file-in-popup-using-jquery
 //print the img when click upload logo (i.e. fix prints fakepath - can get filename through: HTMLInputElement.files )
 //add right css-text
 
