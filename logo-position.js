@@ -2,23 +2,44 @@ let pickedFile = false;
 let pickedPosition = false;
 let cssTextImgTag;
 let cssTextImgContainer;
+let file;
 let fileName;
+let url;
 let logoContainer = document.getElementById("logoContainer");
+let imgElement;
 
 document.getElementById("file-picker").addEventListener("change", (evt) => {
     console.log("picked file name:", evt.target.value); //prints fakepath 
-    // fileName = evt.target.value;
-    fileName = "https://upload.wikimedia.org/wikipedia/commons/4/45/A_small_cup_of_coffee.JPG"; //ska vara dynamisk
-    // fileName = "Logga.png";
+    let strPath = evt.target.value;
+
+    // fileName = "https://upload.wikimedia.org/wikipedia/commons/4/45/A_small_cup_of_coffee.JPG"; //for test
     
     imgElement = document.createElement("img");
-    addSrcAttr(fileName);
+
+    //try to show img:
+    file = evt.target.files[0];
+    // console.log("file", file);
+    console.log("fileName", file.name);
+    fileName = file.name;
+
+      // show errorMsg if file is not an img
+    if (file.type && !file.type.startsWith('image/')) {
+        console.log('show errorMsg: file is not an image.', file.type, file);
+    return;
+    };
+
+    //read url and print logo - NOT WORKING
+    // let reader = new FileReader();
+    // reader.addEventListener("load", (e) => {
+    //     console.log("e in fileReader:", e.target.result);
+    //     url = e.target.result;
+    //     // imgElement.src = url; //this only shows "data:......"
+    // });
+
+    // // reader.readAsText(file);
+    // reader.readAsDataURL(file);
     pickedFile = true;
 });
-
-const addSrcAttr = (fileName) => {
-    imgElement.src = fileName;
-};
 
 const addStyleAttr = (selectElementValue) => {
     switch (selectElementValue) {
@@ -59,16 +80,20 @@ const addStyleAttr = (selectElementValue) => {
     logoContainer.style.cssText = cssTextImgContainer;
 };
 
+// const addSrcAttr = (url) => {
+//     imgElement.src = url;
+// };
+
 document.getElementById("upload-btn").addEventListener("click", (evt) => {
 
     document.getElementById("top").innerHTML = "";
     document.getElementById("bottom").innerHTML="";
 
     if (pickedFile === true) {
-        console.log("rätt, printa");
+        // console.log("rätt, printa");
 
         let selectElementValue = document.querySelector("#logo-position").value;
-        console.log("selectElementValue", selectElementValue);
+        // console.log("selectElementValue", selectElementValue);
     
         //add or replace className to imgElement so it only can be one className
         if (imgElement.classList[0] === undefined || selectElementValue == imgElement.classList[0]) {
@@ -76,12 +101,21 @@ document.getElementById("upload-btn").addEventListener("click", (evt) => {
 
             //create styleAttr + add to imgElement
             addStyleAttr(selectElementValue);
+
+            imgElement.src = fileName;
+
+
+    //         //so the fileName is visible in textarea
+    // console.log("imgElement", imgElement);
+    // imgElement.src = fileName; //error: Image (async) use await?
             
         } else {
             imgElement.classList.replace(imgElement.classList[0], selectElementValue);
             
             //create styleAttr + add to imgElement
             addStyleAttr(selectElementValue);
+            
+            imgElement.src = fileName;
         };
 
         let imgElementToString = imgElement.outerHTML;
@@ -101,13 +135,21 @@ document.getElementById("upload-btn").addEventListener("click", (evt) => {
         console.log("errorMsg = Du måste välja vilken fil du vill ladda upp.");
     };
 
-    logoContainer.appendChild(imgElement); //sometimes get error: Uncaught ReferenceError: imgElement is not defined - lägga till async att imgElement måste fyllas innan detta körs?
+    logoContainer.innerHTML = url;
+
+    // logoContainer.appendChild(file);
+    
+    // logoContainer.appendChild(imgElement); //sometimes get error: Uncaught ReferenceError: imgElement is not defined - lägga till async att imgElement måste fyllas innan detta körs?
  
 });
 
+//use value of dropdown insted of class
 //vad behöver srcString vara för att kunna visa bilden? https://stackoverflow.com/questions/18457340/how-to-preview-selected-image-in-input-type-file-in-popup-using-jquery
 //print the img when click upload logo (i.e. fix prints fakepath - can get filename through: HTMLInputElement.files )
 //add right css-text
 
 //add errorMsg if not choosing dropdown?
 //mobileview 
+
+//Q:
+//do I need to have different src in imgElement in textarea vs for the img tag so the pic can be shown? 
