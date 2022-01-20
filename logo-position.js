@@ -9,25 +9,27 @@ let logoContainer = document.getElementById("logoContainer");
 let imgElement;
 
 document.getElementById("file-picker").addEventListener("change", (evt) => {
+    emptyTextareas();
+    
     console.log("picked fileName:", evt.target.value); //prints fakepath 
     // let strPath = evt.target.value;
     // console.log("strPath", strPath);
-    
+    // let fileName = strPath.substring(strPath.lastIndexOf("\\")+1)
+
     imgElement = document.createElement("img");
 
-    //try to show img:
     file = evt.target.files[0];
-    // console.log("file", file);
-
     fileName = file.name;
+
+    //try to show img:
     //for testing position dropdown + comment back row 136
     // fileName = "https://upload.wikimedia.org/wikipedia/commons/4/45/A_small_cup_of_coffee.JPG"; 
 
     //position right or left depends  on how much white it is around the logo:
     // fileName = https://99designs-blog.imgix.net/blog/wp-content/uploads/2020/04/VKeVyLFoCwCWPdcPrLiWyc-1200-80.jpg?auto=format&q=60&w=1131&h=848.25&fit=crop&crop=faces
-    // console.log("fileName", fileName);
+    console.log("fileName", fileName);
 
-      // show errorMsg if file is not an img
+    //show errorMsg if file is not an img
     if (file.type && !file.type.startsWith('image/')) {
         console.log('show errorMsg: file is not an image.', file.type, file);
     return;
@@ -52,10 +54,6 @@ document.getElementById("file-picker").addEventListener("change", (evt) => {
 const addStyleAttr = (selectElementValue) => {
     switch (selectElementValue) {
         case "top-left":
-            console.log("case top-left");
-
-            //ADD? hämta size-värdet av logo + keep dimensions:
-
             //create css strings to tag and container
             cssTextImgTag = "width: 50%";
             cssTextImgContainer = "border: 1px solid black; width:390px; height:844px; display:flex; align-items: flex-start;";
@@ -88,10 +86,14 @@ const addStyleAttr = (selectElementValue) => {
     logoContainer.style.cssText = cssTextImgContainer;
 };
 
-document.getElementById("upload-btn").addEventListener("click", (evt) => {
-
+const emptyTextareas = () => {
     document.getElementById("top").innerHTML = "";
     document.getElementById("bottom").innerHTML="";
+}
+
+document.getElementById("upload-btn").addEventListener("click", (evt) => {
+
+    emptyTextareas();
 
     if (pickedFile === true) {
         // console.log("rätt, printa");
@@ -99,23 +101,25 @@ document.getElementById("upload-btn").addEventListener("click", (evt) => {
         let selectElementValue = document.querySelector("#logo-position").value;
         // console.log("selectElementValue", selectElementValue);
     
-        //add or replace className to imgElement so it only can be one className
-        if (imgElement.classList[0] === undefined || selectElementValue == imgElement.classList[0]) {
-            imgElement.classList.add(selectElementValue);
+        addStyleAttr(selectElementValue);
 
-            //create styleAttr + add to imgElement
-            addStyleAttr(selectElementValue);
-        } else {
-            imgElement.classList.replace(imgElement.classList[0], selectElementValue);
+        // //add or replace className to imgElement so it only can be one className
+        // if (imgElement.classList[0] === undefined || selectElementValue == imgElement.classList[0]) {
+        //     imgElement.classList.add(selectElementValue);
+
+        //     //create styleAttr + add to imgElement
+        //     addStyleAttr(selectElementValue);
+        // } else {
+        //     imgElement.classList.replace(imgElement.classList[0], selectElementValue);
             
-            //create styleAttr + add to imgElement
-            addStyleAttr(selectElementValue);
-        };
+        //     //create styleAttr + add to imgElement
+        //     addStyleAttr(selectElementValue);
+        // };
 
         let imgElementToString = imgElement.outerHTML;
 
         //decide in which textarea to print the img tag
-        //check if top or bottom:
+        //check if top or bottom: //CHECK queryselector with logo-position -> option value?
         let isTop = selectElementValue.includes("top");
         if (isTop) {
             //print in top textarea
@@ -144,6 +148,11 @@ document.getElementById("upload-btn").addEventListener("click", (evt) => {
 
 //add errorMsg if not choosing dropdown?
 //mobileview 
+
+//https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file
+
+//ADD? hämta size-värdet av logo + keep dimensions i switch cases?
+
 
 //Q:
 //do I need to have different src in imgElement in textarea vs for the img tag so the pic can be shown? 
