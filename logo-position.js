@@ -7,7 +7,7 @@ let url;
 let logoContainer = document.getElementById("logoContainer");
 let logo;
 
-document.getElementById("file-picker").addEventListener("change", (evt) => {
+document.getElementById("file-picker").addEventListener("change", function(evt) {
     emptyTextareas();
 
     srcPath = evt.target.value; //get dynamically
@@ -30,7 +30,7 @@ document.getElementById("file-picker").addEventListener("change", (evt) => {
 });
 
 //create css strings to logo and container elements depending on picked position in dropdown
-const addStyleAttr = (selectElementValue) => {
+const addStyleAttr = function(selectElementValue) {
     switch (selectElementValue) {
         case "top-left":
             cssTextImgTag = "width: 50%";
@@ -63,12 +63,12 @@ const addStyleAttr = (selectElementValue) => {
     logoContainer.style.cssText = cssTextImgContainer;
 };
 
-const emptyTextareas = () => {
+const emptyTextareas = function() {
     document.getElementById("top").innerHTML = "";
     document.getElementById("bottom").innerHTML="";
 };
 
-document.getElementById("upload-btn").addEventListener("click", (evt) => {
+document.getElementById("upload-btn").addEventListener("click", function(evt) {
 
     emptyTextareas();
 
