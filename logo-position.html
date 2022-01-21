@@ -6,9 +6,10 @@
             <h2>Upload logo</h2>
 
             <!-- should we add accept attribute which file type we accept? accept="image/png, image/jpeg"? -->
-            <input id="file-picker" type="file" /><br><br>
-            <label for="logo-position">Choose logo position
-            </label><br>
+            <input id="file-picker" type="file" />
+            <button id="upload-btn">Upload Logo</button><br><br>
+
+            <label for="logo-position">Choose logo position:</label><br>
             <!-- dropdown-logo-position: -->
             <select id="logo-position" name="logo-position">
                 <option value="top-left">Top Left</option>
@@ -18,7 +19,6 @@
                 <option value="bottom-center">Bottom Center</option>
                 <option value="bottom-right">Bottom Right</option>
             </select><br><br>
-            <button id="upload-btn">Upload Logo</button>
         </div><br>
 
         <hr>
@@ -33,7 +33,7 @@
             </label>
             <textarea id="bottom"></textarea>
         </div>
-        <div id="logoContainer"></div>
+        <div id="logo-container"></div>
 
         <script src="logo-position.js"></script>
     </body>

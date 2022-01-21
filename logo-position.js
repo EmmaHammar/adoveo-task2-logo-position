@@ -1,36 +1,21 @@
-let pickedFile = false;
-let pickedPosition = false; //TODO add this
-let cssTextImgTag; //byt namn till cssTextLogo
-let cssTextImgContainer; //byt namn till cssTextLogoContainer
+let pickedFile = false; //change to isPickedFile
+let pickedPosition = false; //change to isPickedPosition
+let cssTextImgTag; //change to cssTextLogo
+let cssTextImgContainer; //change to cssTextLogoContainer
 let srcPath;
 let url;
-let logoContainer = document.getElementById("logoContainer");
+let logoContainer = document.getElementById("logo-container");
 let logo;
+let logoPositionDropDown = document.querySelector("#logo-position"); //after first render: 
+let pickedLogoPosition;
 
-document.getElementById("file-picker").addEventListener("change", function(evt) {
-    emptyTextareas();
+//change name to logoPosition (insted of selectElementValue)
+let selectElementValue = document.querySelector("#logo-position").value; //after first render: top-left
+let logoToString; //used when check isTop
 
-    srcPath = evt.target.value; //get dynamically
-    srcPath = "https://upload.wikimedia.org/wikipedia/commons/4/45/A_small_cup_of_coffee.JPG"; //static
-    console.log("srcPath", srcPath);
-
-    logo = document.createElement("img");
-    let file = evt.target.files[0];
-
-    //show errorMsg if file is not an img
-    if (file.type && !file.type.startsWith('image/')) {
-        console.log('show errorMsg: file is not an image.', file.type, file);
-    return;
-    };
-    pickedFile = true;
-
-    //add src attr to img tag
-    logo.src = srcPath; 	
-    console.log("logo", logo);
-});
-
+console.log("selectElementValue after first render", selectElementValue);
 //create css strings to logo and container elements depending on picked position in dropdown
-const addStyleAttr = function(selectElementValue) {
+function addStyleAttr(selectElementValue) {
     switch (selectElementValue) {
         case "top-left":
             cssTextImgTag = "width: 50%";
@@ -63,26 +48,36 @@ const addStyleAttr = function(selectElementValue) {
     logoContainer.style.cssText = cssTextImgContainer;
 };
 
-const emptyTextareas = function() {
+function emptyTextareas() {
     document.getElementById("top").innerHTML = "";
     document.getElementById("bottom").innerHTML="";
+};
+
+function checkIfTop(selectElementValue, logoToString) {
+    console.log("hej från checkIfTop. selectElementValue:", selectElementValue, "logoToString", logoToString);
+    let isTop = selectElementValue.includes("top");
+    if (isTop) {
+        //print in top 
+        document.getElementById("top").innerHTML = logoToString; //change to logoContainerToString
+    } else {
+        //print in bottom 
+        document.getElementById("bottom").innerHTML = logoToString; //change to logoContainerToString
+    };
 };
 
 document.getElementById("upload-btn").addEventListener("click", function(evt) {
 
     emptyTextareas();
 
-    if (pickedFile === true) {
-        // console.log("rätt, printa");
-
-        let selectElementValue = document.querySelector("#logo-position").value;
-        // console.log("selectElementValue", selectElementValue);
-    
-        addStyleAttr(selectElementValue);
-
+    if (pickedFile === true) {        
+        if (pickedPosition === true) {
+            addStyleAttr(pickedLogoPosition);
+        } else {
+            addStyleAttr(selectElementValue);
+        };
         
         //logoToString should be both logoContainer div and logo img tag -> toString -> print in textArea - TODO: START HERE!!       
-        let logoToString = logo.outerHTML;
+        logoToString = logo.outerHTML;
         console.log("logo", typeof logo);
         let logoContainerToString = logo.closest("div");
         //istället för img också ha imgContainer incl img
@@ -90,24 +85,61 @@ document.getElementById("upload-btn").addEventListener("click", function(evt) {
         console.log("logoContainerToString parent and child?", logoContainerToString);
         //https://stackoverflow.com/questions/27659580/get-the-parent-element-html-along-with-child-content/27659639
 
-        
-
-
         //check if picked position is top or bottom textarea: 
-        let isTop = selectElementValue.includes("top");
-        if (isTop) {
-            //print in top 
-            document.getElementById("top").innerHTML = logoToString; //change to logoContainerToString
-
-
+        if (pickedPosition === true) {
+            console.log("läsa av pickedvalue i dropdown-fältet", pickedLogoPosition);
+            checkIfTop(pickedLogoPosition, logoToString);
+            logoContainer.innerHTML = logoToString;
         } else {
-            //print in bottom 
-            document.getElementById("bottom").innerHTML = logoToString; //change to logoContainerToString
+            checkIfTop(selectElementValue, logoToString);
+            // logoContainer.appendChild(logo); 
+            logoContainer.innerHTML = logoToString;
         };
 
     } else {
         console.log("errorMsg = Du måste välja vilken fil du vill ladda upp.");
     };
+});
 
-    logoContainer.appendChild(logo); 
+document.getElementById("file-picker").addEventListener("change", function(evt) {
+    emptyTextareas();
+
+    srcPath = evt.target.value; //get dynamically
+    srcPath = "https://upload.wikimedia.org/wikipedia/commons/4/45/A_small_cup_of_coffee.JPG"; //static
+
+    logo = document.createElement("img");
+    let file = evt.target.files[0];
+
+    //show errorMsg if file is not an img
+    if (file.type && !file.type.startsWith('image/')) {
+        console.log('show errorMsg: file is not an image.', file.type, file);
+    return;
+    };
+    pickedFile = true;
+
+    //add src attr to img tag
+    logo.src = srcPath; 	
+});
+
+logoPositionDropDown.addEventListener("change", function(evt) {
+    emptyTextareas(); 
+
+    pickedLogoPosition = evt.target.value;
+    console.log("pickedLogoPosition in dropdown:", pickedLogoPosition);
+
+    if (pickedFile === true) {
+        console.log("printa ändring i bild med position:", pickedLogoPosition);
+        addStyleAttr(pickedLogoPosition);
+        pickedPosition = true;
+
+        //add change check if top or bottom so rätt printas i rätt textarea
+
+        if (logoToString !== undefined) {
+            checkIfTop(pickedLogoPosition, logoToString);
+        } else {
+            console.log("du måste ladda upp bild för att kunna se - ej ha som errromsg utan bara för nu");
+        };
+    } else {
+        console.log("errorMsg: Du måste välja en fil innan du kan välja position");
+    };
 });
