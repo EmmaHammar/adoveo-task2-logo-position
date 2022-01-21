@@ -18,6 +18,20 @@
         
         
         // SAVE FOR LATER
+//FILEREADER INPUT TYPE FILE: 
+    //read url and print logo - NOT WORKING
+    // let reader = new FileReader();
+    // reader.addEventListener("load", (e) => {
+    //     console.log("e in fileReader:", e.target.result);
+    //     url = e.target.result;
+    //     // imgElement.src = url; //this only shows "data:......"
+    // });
+
+    // // reader.readAsText(file);
+    // reader.readAsDataURL(file);
+
+//AIM: AN ELEMENT CAN ONLY HAVE 1 CLASS
+//CHECK IF CLASSNAME EXISTS IN ELEMENT. IF NOT -> OK ADD CLASS, IF EXIST -> REPLACE THE OLD CLASS WITH THE NEW. 
         // //add or replace className to imgElement so it only can be one className
         // if (imgElement.classList[0] === undefined || selectElementValue == imgElement.classList[0]) {
         //     imgElement.classList.add(selectElementValue);

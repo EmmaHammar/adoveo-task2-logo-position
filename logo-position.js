@@ -1,54 +1,32 @@
 let pickedFile = false;
-let pickedPosition = false;
+let pickedPosition = false; //TODO add this
 let cssTextImgTag;
 let cssTextImgContainer;
-let file;
-let fileName;
+let srcPath;
 let url;
 let logoContainer = document.getElementById("logoContainer");
-let imgElement;
+let img;
 
 document.getElementById("file-picker").addEventListener("change", (evt) => {
     emptyTextareas();
-    
-    console.log("picked fileName:", evt.target.value); //prints fakepath 
-    // let strPath = evt.target.value;
-    // console.log("strPath", strPath);
-    // let fileName = strPath.substring(strPath.lastIndexOf("\\")+1)
 
-    imgElement = document.createElement("img");
+    srcPath = evt.target.value; //get dynamically
+    srcPath = "https://upload.wikimedia.org/wikipedia/commons/4/45/A_small_cup_of_coffee.JPG"; //static
+    console.log("srcPath", srcPath);
 
-    file = evt.target.files[0];
-    // fileName = file.name; 
-
-    //test CSS when show img:
-    //for testing position dropdown + comment back row 136
-    fileName = "https://upload.wikimedia.org/wikipedia/commons/4/45/A_small_cup_of_coffee.JPG"; 
-
-    //position right or left depends on how much white it is around the logo:
-    // fileName = https://99designs-blog.imgix.net/blog/wp-content/uploads/2020/04/VKeVyLFoCwCWPdcPrLiWyc-1200-80.jpg?auto=format&q=60&w=1131&h=848.25&fit=crop&crop=faces
-    console.log("fileName", fileName);
+    img = document.createElement("img");
+    let file = evt.target.files[0];
 
     //show errorMsg if file is not an img
     if (file.type && !file.type.startsWith('image/')) {
         console.log('show errorMsg: file is not an image.', file.type, file);
     return;
     };
-
-    //read url and print logo - NOT WORKING
-    // let reader = new FileReader();
-    // reader.addEventListener("load", (e) => {
-    //     console.log("e in fileReader:", e.target.result);
-    //     url = e.target.result;
-    //     // imgElement.src = url; //this only shows "data:......"
-    // });
-
-    // // reader.readAsText(file);
-    // reader.readAsDataURL(file);
-
     pickedFile = true;
-    console.log("imgElement", imgElement);
-    imgElement.src = fileName; // ERROR when filename is icon.png: i.e. mark-williams-9bNmhMKQM1Q-unsplash.jpg:1 GET http://127.0.0.1:5500/mark-williams-9bNmhMKQM1Q-unsplash.jpg 404 (Not Found Image (async)		
+
+    //add src attr to img tag
+    img.src = srcPath; 	
+    console.log("img", img);
 });
 
 const addStyleAttr = (selectElementValue) => {
@@ -82,14 +60,14 @@ const addStyleAttr = (selectElementValue) => {
         default:
             break;
     };
-    imgElement.style.cssText = cssTextImgTag;
+    img.style.cssText = cssTextImgTag;
     logoContainer.style.cssText = cssTextImgContainer;
 };
 
 const emptyTextareas = () => {
     document.getElementById("top").innerHTML = "";
     document.getElementById("bottom").innerHTML="";
-}
+};
 
 document.getElementById("upload-btn").addEventListener("click", (evt) => {
 
@@ -103,27 +81,21 @@ document.getElementById("upload-btn").addEventListener("click", (evt) => {
     
         addStyleAttr(selectElementValue);
 
-        let imgElementToString = imgElement.outerHTML;
+        let imgToString = img.outerHTML;
 
-        //decide in which textarea to print the img tag
-        //check if top or bottom: //CHECK queryselector with logo-position -> option value?
+        //check if picked position is top or bottom textarea: 
         let isTop = selectElementValue.includes("top");
         if (isTop) {
-            //print in top textarea
-            document.getElementById("top").innerHTML = imgElementToString;
+            //print in top 
+            document.getElementById("top").innerHTML = imgToString;
         } else {
-            //print in bottom textarea
-            document.getElementById("bottom").innerHTML = imgElementToString;
+            //print in bottom 
+            document.getElementById("bottom").innerHTML = imgToString;
         };
 
     } else {
         console.log("errorMsg = Du måste välja vilken fil du vill ladda upp.");
     };
 
-    //print picked file in result dig - NOT WORKING
-    // logoContainer.innerHTML = url; 
-    
-    //for testing position dropdown
-    logoContainer.appendChild(imgElement); //sometimes get error: Uncaught ReferenceError: imgElement is not defined - lägga till async att imgElement måste fyllas innan detta körs?
- 
+    logoContainer.appendChild(img); 
 });
