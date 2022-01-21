@@ -6,40 +6,51 @@ let srcPath;
 let url;
 let logoContainer = document.getElementById("logo-container");
 let logo;
-let logoPositionDropDown = document.querySelector("#logo-position"); //after first render: 
-let pickedLogoPosition;
+let logoPositionDropDown = document.querySelector("#logo-position"); //change to positionPicker
+let pickedLogoPosition; 
 
 //change name to logoPosition (insted of selectElementValue)
-let selectElementValue = document.querySelector("#logo-position").value; //after first render: top-left
+let selectElementValue = document.querySelector("#logo-position").value; 
 let logoToString; //used when check isTop
 
-console.log("selectElementValue after first render", selectElementValue);
 //create css strings to logo and container elements depending on picked position in dropdown
 function addStyleAttr(selectElementValue) {
     switch (selectElementValue) {
         case "top-left":
-            cssTextImgTag = "width: 50%";
-            cssTextImgContainer = "border: 1px solid black; width:390px; height:844px; display:flex; align-items: flex-start; justify-content: flex-start;";
+            cssTextImgTag = "width: 20%; margin-top: 4%;";
+            // cssTextImgContainer = "border: 1px solid black; width:390px; height:844px; display:flex; align-items: flex-start; justify-content: flex-start;";
+            cssTextImgContainer = "text-align:left;";
         break;
         case "top-center": 
-            cssTextImgTag = "width: 50%";
-            cssTextImgContainer = "border: 1px solid black; width:390px; height:844px; display:flex; align-items: flex-start; justify-content: center;";
+            cssTextImgTag = "width: 20%; margin-top: 4%;";
+            // cssTextImgContainer = "border: 1px solid black; width:390px; height:844px; display:flex; align-items: flex-start; justify-content: center;";
+            cssTextImgContainer = "text-align:center;";
+
         break;
         case "top-right": 
-            cssTextImgTag = "width: 50%";
-            cssTextImgContainer = "border: 1px solid black; width:390px; height:844px; display:flex; align-items: flex-start; justify-content: flex-end;";
+            cssTextImgTag = "width: 20%; margin-top: 4%;";
+            // cssTextImgContainer = "border: 1px solid black; width:390px; height:844px; display:flex; align-items: flex-start; justify-content: flex-end;";
+            cssTextImgContainer = "text-align:right;";
+
         break;
         case "bottom-left":
-            cssTextImgTag = "width: 50%;";
-            cssTextImgContainer = "border: 1px solid black; width:390px; height:844px; display:flex; align-items: flex-end; justify-content: flex-start;";
+            // cssTextImgTag = "width: 50%;";
+            // cssTextImgContainer = "border: 1px solid black; width:390px; height:844px; display:flex; align-items: flex-end; justify-content: flex-start;";
+            cssTextImgTag = "width: 20%; position: absolute; bottom: 0px; margin-bottom: 4%;";
+            cssTextImgContainer = "text-align:left;";            
         break;
         case "bottom-center": 
-            cssTextImgTag = "width: 50%;";
-            cssTextImgContainer = "border: 1px solid black; width:390px; height:844px; display:flex; align-items: flex-end; justify-content: center;";
+            // cssTextImgTag = "width: 50%;";
+            // cssTextImgContainer = "border: 1px solid black; width:390px; height:844px; display:flex; align-items: flex-end; justify-content: center;";
+            cssTextImgTag = "width: 20%; position: absolute; bottom:0; margin-bottom: 4%;";
+            cssTextImgContainer = "text-align:center; padding-right:10%;";
         break;
         case "bottom-right": 
-            cssTextImgTag = "width: 50%;";
-            cssTextImgContainer = "border: 1px solid black; width:390px; height:844px; display:flex; align-items: flex-end; justify-content: flex-end;";
+            // cssTextImgTag = "width: 50%;";
+            // cssTextImgContainer = "border: 1px solid black; width:390px; height:844px; display:flex; align-items: flex-end; justify-content: flex-end;";
+            cssTextImgTag = "width: 20%; position: absolute; bottom: 0px;margin-bottom: 4%;";
+            cssTextImgContainer = "text-align: right; padding-right: 12%;";
+
         break;
         default:
             break;
@@ -54,20 +65,21 @@ function emptyTextareas() {
 };
 
 function checkIfTop(selectElementValue, logoToString) {
-    console.log("hej från checkIfTop. selectElementValue:", selectElementValue, "logoToString", logoToString);
+    // console.log("hej från checkIfTop. selectElementValue:", selectElementValue, "logoToString", logoToString);
     let isTop = selectElementValue.includes("top");
     if (isTop) {
         //print in top 
-        document.getElementById("top").innerHTML = logoToString; //change to logoContainerToString
+        document.getElementById("top").innerHTML = logoContainerToString; //change to logoContainerToString
     } else {
         //print in bottom 
-        document.getElementById("bottom").innerHTML = logoToString; //change to logoContainerToString
+        document.getElementById("bottom").innerHTML = logoContainerToString; //change to logoContainerToString
     };
 };
 
 document.getElementById("upload-btn").addEventListener("click", function(evt) {
-
     emptyTextareas();
+    logoContainerToString="";
+    logoToStringAndDivEndtag="";
 
     if (pickedFile === true) {        
         if (pickedPosition === true) {
@@ -75,25 +87,27 @@ document.getElementById("upload-btn").addEventListener("click", function(evt) {
         } else {
             addStyleAttr(selectElementValue);
         };
-        
-        //logoToString should be both logoContainer div and logo img tag -> toString -> print in textArea - TODO: START HERE!!       
+
+//<div id="logo-container" style="border: 1px solid black; width: 390px; height: 844px; display: flex; align-items: flex-end; justify-content: flex-start;"><div id="logo-container" style="border: 1px solid black; width: 100vw; height: 100%; display: flex; align-items: flex-start; justify-content: flex-start;"><img src="https://upload.wikimedia.org/wikipedia/commons/4/45/A_small_cup_of_coffee.JPG" style="width: 50%;"><img src="https://upload.wikimedia.org/wikipedia/commons/4/45/A_small_cup_of_coffee.JPG" style="width: 50%;"></div>
+
+        //string logoContainer tag and logo tag (print in textArea)
+        logoContainerToString = logoContainer.outerHTML;
+        logoContainerToString = logoContainerToString.split("</div>"); //split div start tag and end tag into arr
         logoToString = logo.outerHTML;
-        console.log("logo", typeof logo);
-        let logoContainerToString = logo.closest("div");
-        //istället för img också ha imgContainer incl img
-        console.log("logoContainer", logoContainer);
-        console.log("logoContainerToString parent and child?", logoContainerToString);
-        //https://stackoverflow.com/questions/27659580/get-the-parent-element-html-along-with-child-content/27659639
+        let logoToStringAndDivEndtag = logoToString+"</div>"; //add div end tag to img tag
+        logoContainerToString = logoContainerToString[0] + logoToStringAndDivEndtag; //add div start tag to 
+        console.log("logoContainerToString:",  logoContainerToString);
+        console.log("logoContainerToString[0]:",  logoContainerToString[0]);
+        console.log("logoToStringAndDivEndtag", logoToStringAndDivEndtag);
+
 
         //check if picked position is top or bottom textarea: 
         if (pickedPosition === true) {
-            console.log("läsa av pickedvalue i dropdown-fältet", pickedLogoPosition);
             checkIfTop(pickedLogoPosition, logoToString);
-            logoContainer.innerHTML = logoToString;
+            logoContainer.innerHTML = logoContainerToString;
         } else {
             checkIfTop(selectElementValue, logoToString);
-            // logoContainer.appendChild(logo); 
-            logoContainer.innerHTML = logoToString;
+            logoContainer.innerHTML = logoContainerToString;
         };
 
     } else {
@@ -105,7 +119,8 @@ document.getElementById("file-picker").addEventListener("change", function(evt) 
     emptyTextareas();
 
     srcPath = evt.target.value; //get dynamically
-    srcPath = "https://upload.wikimedia.org/wikipedia/commons/4/45/A_small_cup_of_coffee.JPG"; //static
+    // srcPath = "https://upload.wikimedia.org/wikipedia/commons/4/45/A_small_cup_of_coffee.JPG"; //static
+    srcPath = "https://logos-download.com/wp-content/uploads/2020/07/Arvid_Nordquist_Logo.png";
 
     logo = document.createElement("img");
     let file = evt.target.files[0];
@@ -125,14 +140,12 @@ logoPositionDropDown.addEventListener("change", function(evt) {
     emptyTextareas(); 
 
     pickedLogoPosition = evt.target.value;
-    console.log("pickedLogoPosition in dropdown:", pickedLogoPosition);
+    // console.log("pickedLogoPosition in dropdown:", pickedLogoPosition);
 
     if (pickedFile === true) {
-        console.log("printa ändring i bild med position:", pickedLogoPosition);
+        // console.log("printa ändring i bild med position:", pickedLogoPosition);
         addStyleAttr(pickedLogoPosition);
         pickedPosition = true;
-
-        //add change check if top or bottom so rätt printas i rätt textarea
 
         if (logoToString !== undefined) {
             checkIfTop(pickedLogoPosition, logoToString);
