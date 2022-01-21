@@ -19,13 +19,13 @@ document.getElementById("file-picker").addEventListener("change", (evt) => {
     imgElement = document.createElement("img");
 
     file = evt.target.files[0];
-    fileName = file.name;
+    // fileName = file.name; 
 
-    //try to show img:
+    //test CSS when show img:
     //for testing position dropdown + comment back row 136
-    // fileName = "https://upload.wikimedia.org/wikipedia/commons/4/45/A_small_cup_of_coffee.JPG"; 
+    fileName = "https://upload.wikimedia.org/wikipedia/commons/4/45/A_small_cup_of_coffee.JPG"; 
 
-    //position right or left depends  on how much white it is around the logo:
+    //position right or left depends on how much white it is around the logo:
     // fileName = https://99designs-blog.imgix.net/blog/wp-content/uploads/2020/04/VKeVyLFoCwCWPdcPrLiWyc-1200-80.jpg?auto=format&q=60&w=1131&h=848.25&fit=crop&crop=faces
     console.log("fileName", fileName);
 
@@ -103,19 +103,6 @@ document.getElementById("upload-btn").addEventListener("click", (evt) => {
     
         addStyleAttr(selectElementValue);
 
-        // //add or replace className to imgElement so it only can be one className
-        // if (imgElement.classList[0] === undefined || selectElementValue == imgElement.classList[0]) {
-        //     imgElement.classList.add(selectElementValue);
-
-        //     //create styleAttr + add to imgElement
-        //     addStyleAttr(selectElementValue);
-        // } else {
-        //     imgElement.classList.replace(imgElement.classList[0], selectElementValue);
-            
-        //     //create styleAttr + add to imgElement
-        //     addStyleAttr(selectElementValue);
-        // };
-
         let imgElementToString = imgElement.outerHTML;
 
         //decide in which textarea to print the img tag
@@ -137,22 +124,6 @@ document.getElementById("upload-btn").addEventListener("click", (evt) => {
     // logoContainer.innerHTML = url; 
     
     //for testing position dropdown
-    // logoContainer.appendChild(imgElement); //sometimes get error: Uncaught ReferenceError: imgElement is not defined - lägga till async att imgElement måste fyllas innan detta körs?
+    logoContainer.appendChild(imgElement); //sometimes get error: Uncaught ReferenceError: imgElement is not defined - lägga till async att imgElement måste fyllas innan detta körs?
  
 });
-
-//use value of dropdown insted of class
-//vad behöver srcString vara för att kunna visa bilden? https://stackoverflow.com/questions/18457340/how-to-preview-selected-image-in-input-type-file-in-popup-using-jquery
-//print the img when click upload logo (i.e. fix prints fakepath - can get filename through: HTMLInputElement.files )
-//add right css-text
-
-//add errorMsg if not choosing dropdown?
-//mobileview 
-
-//https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file
-
-//ADD? hämta size-värdet av logo + keep dimensions i switch cases?
-
-
-//Q:
-//do I need to have different src in imgElement in textarea vs for the img tag so the pic can be shown? 
