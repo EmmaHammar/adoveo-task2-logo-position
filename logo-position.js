@@ -64,7 +64,7 @@ function checkTopOrBottom(selectedPosition) {
     };
 };
 function previewLogo() {
-    // console.log("previewLogo()");
+    document.getElementById("preview-container").innerHTML = tagStr;
 };
 
 document.getElementById("file-picker").addEventListener("change", function(evt) {
@@ -99,12 +99,9 @@ document.getElementById("upload-btn").addEventListener("click", function(evt) {
             console.log("Error: Vänligen ladda upp en bildfil först, därefter kan du positionera bilden.");
         };
 
-
-            
     } else {
         console.log("Error: Vänligen välj en fil du vill ladda upp.");
     };
-    // isPickedFile = false;
 });
 
 
