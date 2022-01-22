@@ -5,17 +5,15 @@ let logoStyle = "";
 let isUpload = false; 
 let isPickedFile = false; 
 let selectedPosition;
-
-//endast för kom ihåg, ta bort var deklaration sen: 
-let filePicker = document.getElementById("file-picker");
-// textarea top 
-// textarea bottom
-// previewContainer
-// errorMsg
+let previewContainer = document.getElementById("preview-container");
 
 function emptyTextareas() {
     document.getElementById("top").innerHTML = "";
     document.getElementById("bottom").innerHTML="";
+};
+
+function emptyPreviewContainer() {
+    previewContainer.innerHTML = "";
 };
 
 function updateStyle(selectedPosition) {
@@ -59,29 +57,26 @@ function checkTopOrBottom(selectedPosition) {
     let isTop = selectedPosition.includes("top");
 
     if (isTop) {
-        //print in top 
         document.getElementById("top").innerHTML = tagStr; 
     } else {
-        //print in bottom 
         document.getElementById("bottom").innerHTML = tagStr; 
     };
 };
 function previewLogo() {
-    document.getElementById("preview-container").innerHTML = tagStr;
+    previewContainer.innerHTML = tagStr;
 };
 
 document.getElementById("file-picker").addEventListener("change", function(evt) {
     isPickedFile = true; 
-
     emptyTextareas();
+    emptyPreviewContainer();
     
     // srcPath = evt.target.value; //get dynamically
     srcPath = "https://logos-download.com/wp-content/uploads/2020/07/Arvid_Nordquist_Logo.png"; //static
 });
 
 document.getElementById("upload-btn").addEventListener("click", function(evt) {
-    //empty previewContainer
-    document.getElementById("preview-container").innerHTML = "";
+    emptyPreviewContainer();
 
     if (isPickedFile === true) {
         isUpload = true;
