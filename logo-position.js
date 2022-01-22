@@ -4,7 +4,6 @@ let logoContainerStyle = "";
 let logoStyle = "";
 let isUpload = false; 
 let isPickedFile = false; 
-let positionPicker = document.querySelector("#logo-position");
 let selectedPosition;
 
 //endast för kom ihåg, ta bort var deklaration sen: 
@@ -51,6 +50,10 @@ function updateStyle(selectedPosition) {
     };
 };
 
+function createTagStr() {
+    tagStr = `<div id="logoContainer" style="${logoContainerStyle}"><img id="logo" src="${srcPath}" style="${logoStyle}"></div>`;
+};
+
 function checkTopOrBottom(selectedPosition) {
     emptyTextareas();
     let isTop = selectedPosition.includes("top");
@@ -84,15 +87,10 @@ document.getElementById("upload-btn").addEventListener("click", function(evt) {
         isUpload = true;
 
         if (isUpload === true) {
-            //get selected position
-            selectedPosition = document.querySelector("select").value;
-            // console.log("visar rätt selectedPosition?", selectedPosition);
-
+            
+            selectedPosition = document.querySelector("select").value; //get selected position
             updateStyle(selectedPosition);
-
-            tagStr = `<div id="logoContainer" style="${logoContainerStyle}"><img id="logo" src="${srcPath}" style="${logoStyle}"></div>`;
-            console.log("tagStr visar rätt:", tagStr);
-
+            createTagStr();
             checkTopOrBottom(selectedPosition);
             previewLogo();
         } else {
@@ -102,6 +100,16 @@ document.getElementById("upload-btn").addEventListener("click", function(evt) {
     } else {
         console.log("Error: Vänligen välj en fil du vill ladda upp.");
     };
+}); 
+
+document.querySelector("#logo-position").addEventListener("change", function(evt) {
+    if (isUpload === true) {
+        selectedPosition = evt.target.value;
+        updateStyle(selectedPosition);
+        createTagStr();
+        checkTopOrBottom(selectedPosition);
+        previewLogo();
+    } else {
+        console.log("Error: Vänligen ladda upp en bildfil först, därefter kan du positionera bilden.");
+    };
 });
-
-
