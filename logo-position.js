@@ -88,8 +88,7 @@ document.getElementById("upload-btn").addEventListener("click", function(evt) {
             addStyleAttr(selectElementValue);
         };
 
-//<div id="logo-container" style="border: 1px solid black; width: 390px; height: 844px; display: flex; align-items: flex-end; justify-content: flex-start;"><div id="logo-container" style="border: 1px solid black; width: 100vw; height: 100%; display: flex; align-items: flex-start; justify-content: flex-start;"><img src="https://upload.wikimedia.org/wikipedia/commons/4/45/A_small_cup_of_coffee.JPG" style="width: 50%;"><img src="https://upload.wikimedia.org/wikipedia/commons/4/45/A_small_cup_of_coffee.JPG" style="width: 50%;"></div>
-
+        //KVAR logoContainerToString töms ej korrekt när man ändrar i dropdown samt vid klick upload btn: 
         //string logoContainer tag and logo tag (print in textArea)
         logoContainerToString = logoContainer.outerHTML;
         logoContainerToString = logoContainerToString.split("</div>"); //split div start tag and end tag into arr
