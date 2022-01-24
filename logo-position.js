@@ -123,4 +123,3 @@ document.querySelector("#logo-size").addEventListener("change", function(evt) {
         console.log("Error: Vänligen ladda upp en bildfil först, därefter kan du positionera bilden.");
     };
 });
-
