@@ -83,7 +83,10 @@ document.getElementById("upload-btn").addEventListener("click", function(evt) {
 
         if (isUpload === true) {
             
-            selectedPosition = document.querySelector("select").value; //get selected position
+            // selectedPosition = document.querySelector("select").value; //get selected position
+            selectedPosition = document.getElementById("logo-position").value; //get selected position
+            selectedSize = document.getElementById("logo-size").value; //get selected position
+
             updateStyle(selectedPosition);
             createTagStr();
             checkTopOrBottom(selectedPosition);
@@ -108,3 +111,4 @@ document.querySelector("#logo-position").addEventListener("change", function(evt
         console.log("Error: Vänligen ladda upp en bildfil först, därefter kan du positionera bilden.");
     };
 });
+
