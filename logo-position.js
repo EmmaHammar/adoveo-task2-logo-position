@@ -89,7 +89,6 @@ document.getElementById("upload-btn").addEventListener("click", function(evt) {
 
             updateStyle(selectedPosition, selectedSize);
             createTagStr();
-            // checkLogoSize();
             checkTopOrBottom(selectedPosition, selectedSize);
             previewLogo();
         } else {
@@ -104,9 +103,21 @@ document.getElementById("upload-btn").addEventListener("click", function(evt) {
 document.querySelector("#logo-position").addEventListener("change", function(evt) {
     if (isUpload === true) {
         selectedPosition = evt.target.value;
-        updateStyle(selectedPosition);
+        updateStyle(selectedPosition, selectedSize);
         createTagStr();
-        checkTopOrBottom(selectedPosition);
+        checkTopOrBottom(selectedPosition, selectedSize);
+        previewLogo();
+    } else {
+        console.log("Error: Vänligen ladda upp en bildfil först, därefter kan du positionera bilden.");
+    };
+});
+
+document.querySelector("#logo-size").addEventListener("change", function(evt) {
+    if (isUpload === true) {
+        selectedSize = evt.target.value;
+        updateStyle(selectedPosition, selectedSize);
+        createTagStr();
+        checkTopOrBottom(selectedPosition, selectedSize);
         previewLogo();
     } else {
         console.log("Error: Vänligen ladda upp en bildfil först, därefter kan du positionera bilden.");
