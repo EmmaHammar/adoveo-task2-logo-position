@@ -16,32 +16,32 @@ function emptyPreviewContainer() {
     previewContainer.innerHTML = "";
 };
 
-function updateStyle(selectedPosition) {
+function updateStyle(selectedPosition, selectedSize) {
     switch (selectedPosition) {
         case "top-left":
             logoContainerStyle = "text-align:left;";
-            logoStyle = "width: 20%; margin-top: 4%; margin-left: 2%;";
+            logoStyle = `width: ${selectedSize}%; margin-top: 4%; margin-left: 2%;`;
         break;
         case "top-center": 
             logoContainerStyle = "text-align:center;";
-            logoStyle = "width: 20%; margin-top: 4%;";
+            logoStyle = `width: ${selectedSize}%; margin-top: 4%;`;
         break;
         case "top-right": 
             logoContainerStyle = "text-align:right;";
-            logoStyle = "width: 20%; margin-top: 4%; margin-right: 2%;";
+            logoStyle = `width: ${selectedSize}%; margin-top: 4%; margin-right: 2%;`;
         break;
         case "bottom-left":
             logoContainerStyle = "text-align:left;";      
-            logoStyle = "width: 5%; position: absolute; bottom: 0px; margin-bottom: 2%; margin-left: 0.5%";
+            logoStyle = `width: ${selectedSize}%; position: absolute; bottom: 0px; margin-bottom: 2%; margin-left: 0.5%`;
             
         break;
         case "bottom-center": 
             logoContainerStyle = "text-align:center; padding-right:20%;";
-            logoStyle = "width: 5%; position: absolute; bottom:0; margin-bottom: 2%;";
+            logoStyle = `width: ${selectedSize}%; position: absolute; bottom:0; margin-bottom: 2%;`;
         break;
         case "bottom-right": 
             logoContainerStyle = "text-align: right; padding-right: 12%;";
-            logoStyle = "width: 5%; position: absolute; bottom: 0px; margin-bottom: 2%; margin-left: -3%;";
+            logoStyle = `width: ${selectedSize}%; position: absolute; bottom: 0px; margin-bottom: 2%; margin-left: -3%;`;
         break;
         default:
         break;
@@ -87,9 +87,10 @@ document.getElementById("upload-btn").addEventListener("click", function(evt) {
             selectedPosition = document.getElementById("logo-position").value; //get selected position
             selectedSize = document.getElementById("logo-size").value; //get selected position
 
-            updateStyle(selectedPosition);
+            updateStyle(selectedPosition, selectedSize);
             createTagStr();
-            checkTopOrBottom(selectedPosition);
+            // checkLogoSize();
+            checkTopOrBottom(selectedPosition, selectedSize);
             previewLogo();
         } else {
             console.log("Error: Vänligen ladda upp en bildfil först, därefter kan du positionera bilden.");
