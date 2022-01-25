@@ -33,17 +33,19 @@ function updateStyle(selectedPosition, selectedSize) {
         case "bottom-left":
             logoContainerStyle = "text-align:left;";      
             // logoStyle = `width: ${selectedSize}%; position: absolute; bottom: 0px; margin-bottom: 2%; margin-left: 0.5%`;
-            logoStyle = `width: ${selectedSize}%; position: absolute; bottom: 0px; margin-bottom: 2%; margin-left: 0.5%`; //test viewport - but the ACM vh is less than campaign vh..
-
+            logoStyle = `width: ${selectedSize}%; margin-bottom: 2%; margin-left: 0.5%`;
             
         break;
         case "bottom-center": 
             logoContainerStyle = "text-align:center; padding-right:20%;";
-            logoStyle = `width: ${selectedSize}%; position: absolute; bottom:0; margin-bottom: 2%;`;
+            // logoStyle = `width: ${selectedSize}%; position: absolute; bottom:0; margin-bottom: 2%;`;
+            logoStyle = `width: ${selectedSize}%; margin-bottom: 2%;`;
         break;
         case "bottom-right": 
             logoContainerStyle = "text-align: right; padding-right: 12%;";
-            logoStyle = `width: ${selectedSize}%; position: absolute; bottom: 0px; margin-bottom: 2%; margin-left: -3%;`;
+            // logoStyle = `width: ${selectedSize}%; position: absolute; bottom: 0px; margin-bottom: 2%; margin-left: -3%;`;
+            logoStyle = `width: ${selectedSize}%; margin-bottom: 2%; margin-left: -3%;`;
+
         break;
         default:
         break;
