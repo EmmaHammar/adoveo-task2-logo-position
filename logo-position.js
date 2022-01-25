@@ -32,7 +32,9 @@ function updateStyle(selectedPosition, selectedSize) {
         break;
         case "bottom-left":
             logoContainerStyle = "text-align:left;";      
-            logoStyle = `width: ${selectedSize}%; position: absolute; bottom: 0px; margin-bottom: 2%; margin-left: 0.5%`;
+            // logoStyle = `width: ${selectedSize}%; position: absolute; bottom: 0px; margin-bottom: 2%; margin-left: 0.5%`;
+            logoStyle = `width: ${selectedSize}%; position: absolute; bottom: 0px; margin-bottom: 2%; margin-left: 0.5%`; //test viewport - but the ACM vh is less than campaign vh..
+
             
         break;
         case "bottom-center": 
